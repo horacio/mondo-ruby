@@ -71,12 +71,13 @@ namespace :version do
     task :major do
       bump_version :major
     end
+
     task :minor do
       bump_version :minor
     end
+
     task :patch do
       bump_version :patch
     end
   end
 end
-

@@ -2,14 +2,15 @@
 
 The Mondo Ruby client provides a simple Ruby interface to the Mondo API.
 
-API documentation, usage guides, and setup information can be found at [getmondo.co.uk/docs](https://getmondo.co.uk/docs/).
+API documentation, usage guides, and setup information can be found at [monzo.com/docs](https://monzo.com/docs/).
 
 ## Initialize your client
 
 ```ruby
 mondo = Mondo::Client.new(
   token: YOUR_TOKEN,
-  account_id: YOUR_ACCOUNT_ID # recommended, but optional. If not set, the client will fetch it from the API
+  # Recommended, but optional. If not set, the client will fetch it from the API
+  account_id: YOUR_ACCOUNT_ID
 )
 ```
 
@@ -24,6 +25,7 @@ Check your client is configured correctly
 
 ```ruby
 mondo.ping
+
 => "pong"
 ```
 
@@ -34,7 +36,6 @@ mondo.balance
 
 => # <Mondo::Balance {"balance"=>642, "currency"=>"GBP", "spend_today"=>0}>}
 ```
-
 
 ## List Transactions
 
@@ -76,7 +77,6 @@ tx.save_metadata
 => true
 ```
 
-
 ## Add an attachment to a transaction
 
 ```ruby
@@ -92,7 +92,6 @@ tx.register_attachment(
 # And remove it again
 tx.attachments.first.deregister
 ```
-
 
 ## Webhooks
 
