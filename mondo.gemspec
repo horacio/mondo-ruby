@@ -9,6 +9,12 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec', '~> 2.13'
   gem.add_development_dependency 'yard', '~> 0.8'
   gem.add_development_dependency 'rake', '~> 10.3'
+  gem.add_development_dependency 'webmock', '~> 2.1'
+  gem.add_development_dependency 'sinatra', '~> 1.4.7'
+  gem.add_development_dependency 'factory_girl', '~> 4.0'
+
+  gem.add_development_dependency 'pry'
+  gem.add_development_dependency 'pry-nav'
 
   gem.authors = ['Tom Blomfield']
   gem.description = %q{A Ruby wrapper for the Mondo API}

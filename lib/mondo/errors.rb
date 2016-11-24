@@ -11,7 +11,7 @@ module Mondo
     attr_reader :response, :response_code, :description
 
     def initialize(response)
-      @response      = response
+      @response = response
       @response_code = response.status
 
       begin

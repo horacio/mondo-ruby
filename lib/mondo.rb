@@ -18,4 +18,8 @@ module Mondo
   require 'mondo/merchant'
   require 'mondo/attachment'
   require 'mondo/web_hook'
+
+  def self.root
+    File.dirname(__dir__)
+  end
 end

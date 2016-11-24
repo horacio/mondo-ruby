@@ -1,11 +1,15 @@
 module Mondo
   class Transaction < Resource
-
-    FIELDS = [
-      :id, :description, :notes,
-      :metadata, :is_load, :category,
-      :settled, :decline_reason
-    ]
+    FIELDS = %i(
+      id
+      description
+      notes
+      metadata
+      is_load
+      category
+      settled
+      decline_reason
+    ).freeze
 
     attr_accessor *FIELDS
 
@@ -36,34 +40,37 @@ module Mondo
     end
 
     def save_metadata
-      self.client.api_patch("/transactions/%i" % self.id, metadata: self.metadata)
+      client.api_patch("/transactions/%i" % id, metadata: metadata)
     end
 
-    def register_attachment(args={})
+    def register_attachment(options = {})
       attachment = Attachment.new({
-        external_id: self.id,
-        file_url:    args.fetch(:file_url),
-        file_type:   args.fetch(:file_type)
-      }, self.client)
+        external_id: id,
+        file_url:    options.fetch(:file_url),
+        file_type:   options.fetch(:file_type)
+      }, client)
 
-      self.attachments << attachment if attachment.register
+      attachments << attachment if attachment.register
     end
 
     def attachments
-      @transactions ||= begin
+      transactions ||= begin
         raw_data['attachments'].map do |attachment|
-          Attachment.new(attachment, self.client)
+          Attachment.new(attachment, client)
         end
       end
     end
 
-    def merchant(opts={})
+    def merchant
       unless raw_data['merchant'].kind_of?(Hash)
-        # Go and refetch the transaction with merchant info expanded
-        self.raw_data['merchant'] = self.client.transaction(self.id, expand: [:merchant]).raw_data['merchant']
+        # Go and refetch the transaction with merchant information expanded
+        raw_data['merchant'] =
+          client.transaction(id, expand: [:merchant]).raw_data['merchant']
       end
 
-      ::Mondo::Merchant.new(raw_data['merchant'], client) unless raw_data['merchant'].nil?
+      if raw_data['merchant'].present?
+        ::Merchant.new(raw_data['merchant'], client)
+      end
     end
 
     def tags

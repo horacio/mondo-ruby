@@ -1,10 +1,15 @@
 module Mondo
   class Card < Resource
-    FIELDS = [
-      :id, :account_id, :status,
-      :name, :last_digits, :expires,
-      :processor_token, :processor
-    ]
+    FIELDS = %i(
+      id
+      account_id
+      status
+      name
+      last_digits
+      expires
+      processor_token
+      processor
+    ).freeze
 
     attr_accessor *FIELDS
     date_accessor :created
